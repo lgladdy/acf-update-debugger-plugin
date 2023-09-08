@@ -47,7 +47,7 @@ function acf_debug_output_options( array $options ) {
 			$outputs['db']    = $raw_option_value;
 		} else {
 			echo '<strong>' . $option . '</strong>: ';
-			$outputs['cache'] = $option_value;
+			$outputs['cache-and-db'] = $option_value;
 		}
 		foreach ( $outputs as $type => $option_value ) {
 			echo '[' . $type . ']' . PHP_EOL;
@@ -77,7 +77,7 @@ function acf_debug_output_site_transients( array $options ) {
 			$outputs['db']    = $raw_option_value;
 		} else {
 			echo '<strong>' . $option . '</strong>: ';
-			$outputs['cache'] = $option_value;
+			$outputs['cache-and-db'] = $option_value;
 		}
 		foreach ( $outputs as $type => $option_value ) {
 			echo '[' . $type . ']' . PHP_EOL;
@@ -107,7 +107,7 @@ function acf_debug_output_transients( array $options ) {
 			$outputs['db']    = $raw_option_value;
 		} else {
 			echo '<strong>' . $option . '</strong>: ';
-			$outputs['cache'] = $option_value;
+			$outputs['cache-and-db'] = $option_value;
 		}
 		foreach ( $outputs as $type => $option_value ) {
 			echo '[' . $type . ']' . PHP_EOL;
