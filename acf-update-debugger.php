@@ -2,7 +2,7 @@
 /*
 Plugin Name: ACF Update Debugger
 Description: A test plugin to output various states and transients to try and debug ACF issues on production hosts.
-Version: 1.0.1
+Version: 1.0.2
 Author: Liam Gladdy
 */
 
@@ -22,6 +22,8 @@ function acf_site_health_tab( $tab ) {
 	echo '<div class="health-check-body health-check-status-tab hide-if-no-js">';
 
 	echo '<h1>ACF Update Debug Information</h1>';
+	echo '<h3>Size of Autoloaded Options</h3>';
+	echo acf_format_bytes( acf_debug_calculate_autoload_size() );
 	echo '<h3>Site Options</h3>';
 	acf_debug_output_options( array( 'siteurl', 'home' ) );
 	echo '<h3>ACF Options</h3>';
@@ -36,11 +38,16 @@ function acf_site_health_tab( $tab ) {
 	echo '</div>';
 }
 
+function acf_debug_calculate_autoload_size() {
+	global $wpdb;
+	return $wpdb->get_var( "SELECT SUM(LENGTH(option_value)) FROM $wpdb->options WHERE autoload = 'yes'" );
+}
+
 function acf_debug_output_options( array $options ) {
 	foreach ( $options as $option ) {
-		$option_value      = get_option( $option );
-		$raw_option_value  = acf_debug_raw_query( $option );
-		$outputs           = array();
+		$option_value     = get_option( $option );
+		$raw_option_value = acf_debug_raw_query( $option );
+		$outputs          = array();
 		if ( $raw_option_value != $option_value ) {
 			echo '<strong style="color:red">' . $option . ' [cache does not match database]</strong>: ';
 			$outputs['cache'] = $option_value;
