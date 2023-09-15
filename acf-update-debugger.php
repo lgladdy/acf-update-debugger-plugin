@@ -2,7 +2,7 @@
 /*
 Plugin Name: ACF Update Debugger
 Description: A test plugin to output various states and transients to try and debug ACF issues on production hosts.
-Version: 1.0.2
+Version: 1.0.3
 Author: Liam Gladdy
 */
 
@@ -146,12 +146,6 @@ function acf_debug_guesstimate_size( $var ) {
 	return acf_format_bytes( strlen( serialize( $var ) ) );
 }
 
-function acf_format_bytes( $bytes, $precision = 2 ) {
-	$units = array( 'B', 'KB', 'MB', 'GB', 'TB' );
-
-	$bytes = max( $bytes, 0 );
-	$pow   = floor( ( $bytes ? log( $bytes ) : 0 ) / log( 1024 ) );
-	$pow   = min( $pow, count( $units ) - 1 );
-
-	return number_format( round( $bytes, $precision ) ) . $units[ $pow ];
+function acf_format_bytes( $bytes ) {
+	return round( $bytes / 1024, 2 ) . 'KB';
 }
